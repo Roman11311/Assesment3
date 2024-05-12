@@ -22,23 +22,38 @@
         <activity
             android:name=".LoginActivity"
             android:exported="true">
+        </activity>
+
+        <activity android:name=".RegistrationActivity" />
+
+        <activity
+            android:name=".HomeActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
-        <activity android:name=".RegistrationActivity" />
-        <activity android:name=".HomeActivity" />
-
         <activity
-            android:name=".ProductDetailsActivity"
+            android:name=".ProductItemActivity"
             android:label="Product Details"
             android:parentActivityName=".HomeActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".HomeActivity" />
         </activity>
+
+        <activity
+            android:name=".MyCartActivity"
+            android:label="My Cart">
+        </activity>
+
+        <activity
+            android:name=".CheckoutActivity"
+            android:label="Checkout">
+        </activity>
+
     </application>
 
 </manifest>

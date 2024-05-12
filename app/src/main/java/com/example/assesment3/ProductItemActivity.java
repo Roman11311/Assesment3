@@ -6,10 +6,11 @@ import androidx.core.content.ContextCompat;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
-public class ProductDetailsActivity extends AppCompatActivity {
+public class ProductItemActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,12 +22,50 @@ public class ProductDetailsActivity extends AppCompatActivity {
 
 
         // Set OnClickListener for the menu button
-
         ImageView menuButton = findViewById(R.id.menu);
         menuButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 toggleMenuVisibility();
+            }
+        });
+
+        // Set OnClickListener for the home button
+        ImageView homeButton = findViewById(R.id.homeButton);
+        homeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ProductItemActivity.this, HomeActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        // Set OnClickListener for the cart button
+        ImageView cartButton = findViewById(R.id.cartButton);
+        cartButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ProductItemActivity.this, MyCartActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        // Set OnClickListener for the "Add to Cart" button
+        Button addToCartButton = findViewById(R.id.add_to_cart_button);
+        addToCartButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Get the product name and price
+                String productName = "Samsung Galaxy S24 Ultra 5G"; // Example product name
+                double productPrice = 2400.00; // Example product price
+
+                // Create an intent to navigate to the MyCartActivity
+                Intent intent = new Intent(ProductItemActivity.this, MyCartActivity.class);
+                // Pass the product name and price as extras
+                intent.putExtra("productName", productName);
+                intent.putExtra("productPrice", productPrice);
+                // Start the MyCartActivity
+                startActivity(intent);
             }
         });
     }

@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!-- Header Layout -->
+    <RelativeLayout
+        android:id="@+id/headerLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#F8CBEE"
+        android:padding="16dp">
+
+        <!-- Back Button -->
+        <Button
+            android:id="@+id/backButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:text="Back"
+            android:textColor="@android:color/black"
+            android:background="#33000000" />
+
+
+        <!-- Header Text -->
+        <TextView
+            android:id="@+id/myCartTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="My Cart"
+            android:textColor="@android:color/black"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+    </RelativeLayout>
+
+    <!-- Cart Items Layout -->
+    <ScrollView
+        android:id="@+id/cartScrollView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/headerLayout"
+        android:background="@android:color/white">
+
+        <LinearLayout
+            android:id="@+id/cartItemsLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+            <!-- No items added yet, will be populated dynamically -->
+
+            <!-- No items in cart message -->
+            <TextView
+                android:id="@+id/noItemsTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="No items in the cart"
+                android:textColor="@android:color/black"
+                android:textSize="18sp"
+                android:visibility="gone" />
+
+        </LinearLayout>
+
+    </ScrollView>
+
+    <!-- Total Price Layout -->
+    <RelativeLayout
+        android:id="@+id/totalPriceLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="#F8CBEE"
+        android:padding="16dp">
+
+        <!-- Total Price Text -->
+        <TextView
+            android:id="@+id/totalPriceTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Total: $0.00"
+            android:textColor="@android:color/black"
+            android:textSize="18sp" />
+
+        <!-- Checkout Button -->
+        <Button
+            android:id="@+id/checkoutButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="16dp"
+            android:text="Proceed to Checkout"
+            android:textColor="@android:color/white" />
+
+    </RelativeLayout>
+
+</RelativeLayout>

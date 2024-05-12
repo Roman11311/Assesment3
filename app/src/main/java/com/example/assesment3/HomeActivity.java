@@ -25,7 +25,7 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // Pass relevant data to the details activity
-                Intent intent = new Intent(HomeActivity.this, ProductDetailsActivity.class);
+                Intent intent = new Intent(HomeActivity.this, ProductItemActivity.class);
                 intent.putExtra("product_name", "Samsung Galaxy S24 Ultra 5G");
                 startActivity(intent);
             }
@@ -35,7 +35,7 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // Pass relevant data to the details activity
-                Intent intent = new Intent(HomeActivity.this, ProductDetailsActivity.class);
+                Intent intent = new Intent(HomeActivity.this, ProductItemActivity.class);
                 intent.putExtra("product_name", "Huawei Pura 70 Pro 5G");
                 startActivity(intent);
             }
