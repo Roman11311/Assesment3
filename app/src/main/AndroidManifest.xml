@@ -36,7 +36,16 @@
         </activity>
 
         <activity
-            android:name=".ProductItemActivity"
+            android:name=".SamsungActivity"
+            android:label="Product Details"
+            android:parentActivityName=".HomeActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".HomeActivity" />
+        </activity>
+
+        <activity
+            android:name=".HuaweiActivity"
             android:label="Product Details"
             android:parentActivityName=".HomeActivity">
             <meta-data

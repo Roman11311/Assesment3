@@ -1,14 +1,14 @@
 package com.example.assesment3;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
 import androidx.appcompat.app.AppCompatActivity;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -21,7 +21,7 @@ public class MyCartActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.my_cart);
 
-        Button backButton = findViewById(R.id.backButton);
+        ImageView backButton = findViewById(R.id.backButton);
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -46,22 +46,29 @@ public class MyCartActivity extends AppCompatActivity {
         Intent intent = getIntent();
 
         // Check if the intent has the necessary extras
-        if (intent.hasExtra("productName") && intent.hasExtra("productPrice")) {
-            // Retrieve the product details
-            String productName = intent.getStringExtra("productName");
-            double productPrice = intent.getDoubleExtra("productPrice", 0.0);
+        if (intent != null) {
+            // Check if the intent has extra for Samsung product
+            if (intent.hasExtra("samsungProductName") && intent.hasExtra("samsungProductPrice")) {
+                String samsungProductName = intent.getStringExtra("samsungProductName");
+                double samsungProductPrice = intent.getDoubleExtra("samsungProductPrice", 0.0);
+                handleProduct(samsungProductName, samsungProductPrice);
+            }
 
-            // Add the product to the cart items list
-            cartItems.add(new CartItem(productName, productPrice));
+            // Check if the intent has extra for Huawei product
+            if (intent.hasExtra("huaweiProductName") && intent.hasExtra("huaweiProductPrice")) {
+                String huaweiProductName = intent.getStringExtra("huaweiProductName");
+                double huaweiProductPrice = intent.getDoubleExtra("huaweiProductPrice", 0.0);
+                handleProduct(huaweiProductName, huaweiProductPrice);
+            }
+        }
 
-            // Display the cart items
-            displayCartItems();
-        } else {
+        else {
             // Show "No items in the cart" message
             TextView noItemsTextView = findViewById(R.id.noItemsTextView);
             noItemsTextView.setVisibility(View.VISIBLE);
         }
 
+        displayCartItems();
         // Display total price after adding all items
         displayTotalPrice();
     }
@@ -69,7 +76,7 @@ public class MyCartActivity extends AppCompatActivity {
     private double calculateTotalPrice() {
         double totalPrice = 0.0;
         for (CartItem item : cartItems) {
-            totalPrice += item.getPrice();
+            totalPrice += item.getPrice() * item.getQuantity(); // Multiply by quantity
         }
         return totalPrice;
     }
@@ -86,7 +93,7 @@ public class MyCartActivity extends AppCompatActivity {
                     LinearLayout.LayoutParams.WRAP_CONTENT));
             itemLayout.setOrientation(LinearLayout.HORIZONTAL);
 
-            // Add TextViews for item name and price to the layout
+            // Add TextViews for item name, quantity, and price to the layout
             TextView itemNameTextView = new TextView(this);
             itemNameTextView.setText(item.getName());
             itemNameTextView.setTextSize(16);
@@ -94,15 +101,25 @@ public class MyCartActivity extends AppCompatActivity {
                     LinearLayout.LayoutParams.WRAP_CONTENT,
                     LinearLayout.LayoutParams.WRAP_CONTENT, 1));
 
+            TextView itemQuantityTextView = new TextView(this);
+            itemQuantityTextView.setText("Quantity: " + item.getQuantity()+ " ");
+            itemQuantityTextView.setTextSize(16);
+            itemQuantityTextView.setLayoutParams(new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.WRAP_CONTENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT));
+
             TextView itemPriceTextView = new TextView(this);
-            itemPriceTextView.setText(String.format("$%.2f", item.getPrice()));
+            itemPriceTextView.setText(String.format("$%.2f", item.getPrice() * item.getQuantity())); // Multiply by quantity
             itemPriceTextView.setTextSize(16);
             itemPriceTextView.setLayoutParams(new LinearLayout.LayoutParams(
                     LinearLayout.LayoutParams.WRAP_CONTENT,
                     LinearLayout.LayoutParams.WRAP_CONTENT));
 
+            itemPriceTextView.setTypeface(null, Typeface.BOLD); // Set text style to bold
+
             // Add TextViews to the item layout
             itemLayout.addView(itemNameTextView);
+            itemLayout.addView(itemQuantityTextView);
             itemLayout.addView(itemPriceTextView);
 
             // Add item layout to the cart items layout
@@ -118,13 +135,32 @@ public class MyCartActivity extends AppCompatActivity {
         totalPriceTextView.setText(String.format("Total: $%.2f", totalPrice));
     }
 
+    private void handleProduct(String productName, double productPrice) {
+        // Check if the product is already in cartItems
+        boolean productFound = false;
+        for (CartItem item : cartItems) {
+            if (item.getName().equals(productName)) {
+                // Increment quantity
+                item.setQuantity(item.getQuantity() + 1);
+                productFound = true;
+                break;
+            }
+        }
+        if (!productFound) {
+            // Add the product to the cart items list
+            cartItems.add(new CartItem(productName, productPrice, 1));
+        }
+    }
+
     public static class CartItem implements Serializable {
         private String name;
         private double price;
+        private double quantity;
 
-        public CartItem(String name, double price) {
+        public CartItem(String name, double price, double quantity) {
             this.name = name;
             this.price = price;
+            this.quantity = quantity;
         }
 
         public String getName() {
@@ -133,6 +169,14 @@ public class MyCartActivity extends AppCompatActivity {
 
         public double getPrice() {
             return price;
+        }
+
+        public double getQuantity() {
+            return quantity;
+        }
+
+        public void setQuantity(double quantity) {
+            this.quantity = quantity;
         }
     }
 }

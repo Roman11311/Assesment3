@@ -19,14 +19,16 @@ public class HomeActivity extends AppCompatActivity {
         // Find the product item layouts
         LinearLayout productItem1 = findViewById(R.id.productItem1);
         LinearLayout productItem2 = findViewById(R.id.productItem2);
+        LinearLayout productItem3 = findViewById(R.id.productItem3);
+        LinearLayout productItem4 = findViewById(R.id.productItem4);
 
         // Add click listeners to the product items
         productItem1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // Pass relevant data to the details activity
-                Intent intent = new Intent(HomeActivity.this, ProductItemActivity.class);
-                intent.putExtra("product_name", "Samsung Galaxy S24 Ultra 5G");
+                Intent intent = new Intent(HomeActivity.this, SamsungActivity.class);
+                intent.putExtra("Samsung", "Samsung Galaxy S24 Ultra 5G");
                 startActivity(intent);
             }
         });
@@ -35,8 +37,28 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // Pass relevant data to the details activity
-                Intent intent = new Intent(HomeActivity.this, ProductItemActivity.class);
-                intent.putExtra("product_name", "Huawei Pura 70 Pro 5G");
+                Intent intent = new Intent(HomeActivity.this, HuaweiActivity.class);
+                intent.putExtra("Huawei", "Huawei Pura 70 Pro 5G");
+                startActivity(intent);
+            }
+        });
+
+        productItem3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Pass relevant data to the details activity
+                Intent intent = new Intent(HomeActivity.this, SamsungActivity.class);
+                intent.putExtra("Iphone", "Iphone 15 Pro Max 5G");
+                startActivity(intent);
+            }
+        });
+
+        productItem4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Pass relevant data to the details activity
+                Intent intent = new Intent(HomeActivity.this, SamsungActivity.class);
+                intent.putExtra("Google", "Google Pixel Pro 5G");
                 startActivity(intent);
             }
         });
