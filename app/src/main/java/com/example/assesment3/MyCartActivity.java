@@ -48,29 +48,34 @@ public class MyCartActivity extends AppCompatActivity {
         // Check if the intent has the necessary extras
         if (intent != null) {
             // Check if the intent has extra for Samsung product
-            if (intent.hasExtra("samsungProductName") && intent.hasExtra("samsungProductPrice")) {
+            if (intent.hasExtra("samsungProductName")
+                && intent.hasExtra("samsungProductPrice")) {
                 String samsungProductName = intent.getStringExtra("samsungProductName");
                 double samsungProductPrice = intent.getDoubleExtra("samsungProductPrice", 0.0);
-                handleProduct(samsungProductName, samsungProductPrice);
+                int samsungProductQuantity = intent.getIntExtra("samsungProductQuantity", 1);
+                handleProduct(samsungProductName, samsungProductPrice, samsungProductQuantity);
             }
 
             // Check if the intent has extra for Huawei product
             if (intent.hasExtra("huaweiProductName") && intent.hasExtra("huaweiProductPrice")) {
                 String huaweiProductName = intent.getStringExtra("huaweiProductName");
                 double huaweiProductPrice = intent.getDoubleExtra("huaweiProductPrice", 0.0);
-                handleProduct(huaweiProductName, huaweiProductPrice);
+                int huaweiProductQuantity = intent.getIntExtra("huaweiProductQuantity", 1);
+                handleProduct(huaweiProductName, huaweiProductPrice, huaweiProductQuantity);
             }
 
             if (intent.hasExtra("iphoneProductName") && intent.hasExtra("iphoneProductPrice")) {
                 String iphoneProductName = intent.getStringExtra("iphoneProductName");
                 double iphoneProductPrice = intent.getDoubleExtra("iphoneProductPrice", 0.0);
-                handleProduct(iphoneProductName, iphoneProductPrice);
+                int iphoneProductQuantity = intent.getIntExtra("iphoneProductQuantity", 1);
+                handleProduct(iphoneProductName, iphoneProductPrice, iphoneProductQuantity);
             }
 
             if (intent.hasExtra("googleProductName") && intent.hasExtra("googleProductPrice")) {
                 String googleProductName = intent.getStringExtra("googleProductName");
                 double googleProductPrice = intent.getDoubleExtra("googleProductPrice", 0.0);
-                handleProduct(googleProductName, googleProductPrice);
+                int googleProductQuantity = intent.getIntExtra("googleProductQuantity", 1);
+                handleProduct(googleProductName, googleProductPrice, googleProductQuantity);
             }
         }
 
@@ -147,22 +152,23 @@ public class MyCartActivity extends AppCompatActivity {
         totalPriceTextView.setText(String.format("Total: $%.2f", totalPrice));
     }
 
-    private void handleProduct(String productName, double productPrice) {
+    private void handleProduct(String productName, double productPrice, int quantity) {
         // Check if the product is already in cartItems
         boolean productFound = false;
         for (CartItem item : cartItems) {
             if (item.getName().equals(productName)) {
                 // Increment quantity
-                item.setQuantity(item.getQuantity() + 1);
+                item.setQuantity(item.getQuantity() + quantity);
                 productFound = true;
                 break;
             }
         }
         if (!productFound) {
             // Add the product to the cart items list
-            cartItems.add(new CartItem(productName, productPrice, 1));
+            cartItems.add(new CartItem(productName, productPrice, quantity));
         }
     }
+
 
     public static class CartItem implements Serializable {
         private String name;

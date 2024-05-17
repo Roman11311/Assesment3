@@ -3,9 +3,11 @@ package com.example.assesment3;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
@@ -16,6 +18,17 @@ public class HuaweiActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.huawei);
+
+        // Initialize the Spinner with quantity options
+        Spinner quantitySpinner = findViewById(R.id.quantity_spinner);
+        String[] quantityOptions = new String[]{"1", "2", "3", "4", "5"};
+
+        // Create an ArrayAdapter using the string array and a default spinner layout
+        ArrayAdapter<String> quantityAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, quantityOptions);
+        // Specify the layout to use when the list of choices appears
+        quantityAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        // Apply the adapter to the spinner
+        quantitySpinner.setAdapter(quantityAdapter);
 
         ImageView backButton = findViewById(R.id.backButton);
         backButton.setOnClickListener(new View.OnClickListener() {
@@ -66,13 +79,14 @@ public class HuaweiActivity extends AppCompatActivity {
                 // Get the product name and price
                 String productName = "Huawei Pura 70 Pro 5G"; // product name
                 double productPrice = 1530; // product price
-
+                int quantity = Integer.parseInt(quantitySpinner.getSelectedItem().toString());
 
                 // Create an intent to navigate to the MyCartActivity
                 Intent intent = new Intent(HuaweiActivity.this, MyCartActivity.class);
                 // Pass the product name and price as extras
                 intent.putExtra("huaweiProductName", productName);
                 intent.putExtra("huaweiProductPrice", productPrice);
+                intent.putExtra("huaweiProductQuantity", quantity);
                 // Start the MyCartActivity
                 startActivity(intent);
             }

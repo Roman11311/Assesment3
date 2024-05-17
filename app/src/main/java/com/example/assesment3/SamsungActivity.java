@@ -6,9 +6,11 @@ import androidx.core.content.ContextCompat;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
 
 public class SamsungActivity extends AppCompatActivity {
 
@@ -16,6 +18,17 @@ public class SamsungActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.samsung);
+
+        // Initialize the Spinner with quantity options
+        Spinner quantitySpinner = findViewById(R.id.quantity_spinner);
+        String[] quantityOptions = new String[]{"1", "2", "3", "4", "5"};
+
+        // Create an ArrayAdapter using the string array and a default spinner layout
+        ArrayAdapter<String> quantityAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, quantityOptions);
+        // Specify the layout to use when the list of choices appears
+        quantityAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        // Apply the adapter to the spinner
+        quantitySpinner.setAdapter(quantityAdapter);
 
         ImageView backButton = findViewById(R.id.backButton);
         backButton.setOnClickListener(new View.OnClickListener() {
@@ -66,12 +79,14 @@ public class SamsungActivity extends AppCompatActivity {
                 // Get the product name and price
                 String productName = "Samsung Galaxy S24 Ultra 5G"; // product name
                 double productPrice = 2400.00; // product price
+                int quantity = Integer.parseInt(quantitySpinner.getSelectedItem().toString());
 
                 // Create an intent to navigate to the MyCartActivity
                 Intent intent = new Intent(SamsungActivity.this, MyCartActivity.class);
                 // Pass the product name and price as extras
                 intent.putExtra("samsungProductName", productName);
                 intent.putExtra("samsungProductPrice", productPrice);
+                intent.putExtra("samsungProductQuantity", quantity);
                 // Start the MyCartActivity
                 startActivity(intent);
             }
