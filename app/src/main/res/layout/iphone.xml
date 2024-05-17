@@ -1,76 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-
-    <LinearLayout
+    <!-- NestedScrollView -->
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="match_parent"
+        android:layout_above="@id/headerLayout">
 
-        <!-- Header -->
-        <LinearLayout
-            android:id="@+id/headerLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:padding="16dp">
-
-            <!-- Logo -->
-            <ImageView
-                android:id="@+id/logo"
-                android:layout_width="58dp"
-                android:layout_height="58dp"
-                android:src="@drawable/img_6" />
-
-            <!-- Company Name -->
-            <TextView
-                android:id="@+id/name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="12dp"
-                android:text="TRMS Mobile House"
-                android:textColor="@android:color/black"
-                android:textSize="24sp" />
-
-            <!-- Menu Button -->
-            <ImageView
-                android:id="@+id/menu"
-                android:layout_width="36dp"
-                android:layout_height="36dp"
-                android:layout_marginTop="12dp"
-                android:layout_marginLeft="64dp"
-                android:src="@drawable/ic_menu"/>
-        </LinearLayout>
-
-        <!-- Search Box -->
-        <LinearLayout
-            android:id="@+id/searchBox"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/headerLayout"
-            android:background="#FFD9E6"
-            android:orientation="horizontal"
-            android:padding="16dp">
-
-            <EditText
-                android:id="@+id/searchText"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@android:drawable/editbox_background"
-                android:hint="Search"
-                android:padding="8dp" />
-
-        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/searchBox"
             android:orientation="vertical">
+
+            <!-- Header -->
+            <fragment
+                android:id="@+id/headerFragment"
+                android:name="com.example.assesment3.HeaderFragmentLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true" />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/searchBox"
+                android:orientation="vertical">
             <!-- Product Image -->
             <ImageView
                 android:id="@+id/product_image"
@@ -398,4 +356,11 @@
         </LinearLayout>
 
     </LinearLayout>
-</androidx.core.widget.NestedScrollView>
+    </androidx.core.widget.NestedScrollView>
+
+    <include
+        layout="@layout/menu_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+</RelativeLayout>

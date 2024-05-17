@@ -118,6 +118,7 @@
         android:id="@+id/orderSummaryScrollView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_above="@id/placeOrderButton"
         android:layout_below="@id/userDetailsLayout"
         android:padding="16dp">
 
@@ -153,6 +154,7 @@
                 android:text="Total Price: $0.00"
                 android:textColor="@android:color/black"
                 android:textStyle="bold" />
+
         </LinearLayout>
 
     </ScrollView>

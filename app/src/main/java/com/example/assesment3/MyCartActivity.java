@@ -60,6 +60,18 @@ public class MyCartActivity extends AppCompatActivity {
                 double huaweiProductPrice = intent.getDoubleExtra("huaweiProductPrice", 0.0);
                 handleProduct(huaweiProductName, huaweiProductPrice);
             }
+
+            if (intent.hasExtra("iphoneProductName") && intent.hasExtra("iphoneProductPrice")) {
+                String iphoneProductName = intent.getStringExtra("iphoneProductName");
+                double iphoneProductPrice = intent.getDoubleExtra("iphoneProductPrice", 0.0);
+                handleProduct(iphoneProductName, iphoneProductPrice);
+            }
+
+            if (intent.hasExtra("googleProductName") && intent.hasExtra("googleProductPrice")) {
+                String googleProductName = intent.getStringExtra("googleProductName");
+                double googleProductPrice = intent.getDoubleExtra("googleProductPrice", 0.0);
+                handleProduct(googleProductName, googleProductPrice);
+            }
         }
 
         else {

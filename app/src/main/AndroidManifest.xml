@@ -55,6 +55,24 @@
         </activity>
 
         <activity
+            android:name=".IphoneActivity"
+            android:label="Product Details"
+            android:parentActivityName=".HomeActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".HomeActivity" />
+        </activity>
+
+        <activity
+            android:name=".GoogleActivity"
+            android:label="Product Details"
+            android:parentActivityName=".HomeActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".HomeActivity" />
+        </activity>
+
+        <activity
             android:name=".MyCartActivity"
             android:label="My Cart">
         </activity>

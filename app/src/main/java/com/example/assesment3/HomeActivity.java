@@ -47,7 +47,7 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // Pass relevant data to the details activity
-                Intent intent = new Intent(HomeActivity.this, SamsungActivity.class);
+                Intent intent = new Intent(HomeActivity.this, IphoneActivity.class);
                 intent.putExtra("Iphone", "Iphone 15 Pro Max 5G");
                 startActivity(intent);
             }
@@ -57,7 +57,7 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // Pass relevant data to the details activity
-                Intent intent = new Intent(HomeActivity.this, SamsungActivity.class);
+                Intent intent = new Intent(HomeActivity.this, GoogleActivity.class);
                 intent.putExtra("Google", "Google Pixel Pro 5G");
                 startActivity(intent);
             }

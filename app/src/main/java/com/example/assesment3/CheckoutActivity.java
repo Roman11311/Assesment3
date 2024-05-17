@@ -44,7 +44,8 @@ public class CheckoutActivity extends AppCompatActivity {
         LinearLayout orderSummaryLayout = findViewById(R.id.orderSummaryLayout);
 
         // Display each item
-        for (CartItem item : items) {
+        for (int i = 0; i < items.size(); i++) {
+            CartItem item = items.get(i);
             LinearLayout itemLayout = new LinearLayout(this);
             itemLayout.setLayoutParams(new LinearLayout.LayoutParams(
                     LinearLayout.LayoutParams.MATCH_PARENT,
@@ -68,12 +69,20 @@ public class CheckoutActivity extends AppCompatActivity {
 
             itemNameTextView.setTypeface(null, Typeface.BOLD);
 
+            // Add top margin to all items except the first one
+            if (i >= 0) {
+                LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) itemLayout.getLayoutParams();
+                layoutParams.topMargin = 16; // Adjust the margin as needed
+                itemLayout.setLayoutParams(layoutParams);
+            }
+
             orderSummaryLayout.addView(itemLayout);
         }
 
-        // Display total price
+    // Display total price
         TextView totalPriceTextView = findViewById(R.id.totalPriceTextView);
         totalPriceTextView.setText(String.format("Total Price: $%.2f", totalPrice));
     }
+
 
 }
