@@ -1,6 +1,7 @@
 package com.example.assesment3;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.View;
@@ -102,7 +103,9 @@ public class MyCartActivity extends AppCompatActivity {
         LinearLayout cartItemsLayout = findViewById(R.id.cartItemsLayout);
         cartItemsLayout.removeAllViews(); // Clear previous items
 
-        for (CartItem item : cartItems) {
+        for (int i = 0; i < cartItems.size(); i++) {
+            final CartItem item = cartItems.get(i);
+
             // Create a new LinearLayout for each cart item
             LinearLayout itemLayout = new LinearLayout(this);
             itemLayout.setLayoutParams(new LinearLayout.LayoutParams(
@@ -119,30 +122,52 @@ public class MyCartActivity extends AppCompatActivity {
                     LinearLayout.LayoutParams.WRAP_CONTENT, 1));
 
             TextView itemQuantityTextView = new TextView(this);
-            itemQuantityTextView.setText("Quantity: " + item.getQuantity()+ " ");
+            itemQuantityTextView.setText("Quantity: " + item.getQuantity() + " ");
             itemQuantityTextView.setTextSize(16);
             itemQuantityTextView.setLayoutParams(new LinearLayout.LayoutParams(
                     LinearLayout.LayoutParams.WRAP_CONTENT,
                     LinearLayout.LayoutParams.WRAP_CONTENT));
 
             TextView itemPriceTextView = new TextView(this);
-            itemPriceTextView.setText(String.format("$%.2f", item.getPrice() * item.getQuantity())); // Multiply by quantity
+            itemPriceTextView.setText(String.format("$%.2f", item.getPrice() * item.getQuantity())+ " "); // Multiply by quantity
             itemPriceTextView.setTextSize(16);
             itemPriceTextView.setLayoutParams(new LinearLayout.LayoutParams(
                     LinearLayout.LayoutParams.WRAP_CONTENT,
                     LinearLayout.LayoutParams.WRAP_CONTENT));
 
+            LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) itemLayout.getLayoutParams();
+            layoutParams.topMargin = 16; // Adjust the margin as needed
+            itemLayout.setLayoutParams(layoutParams);
+
             itemPriceTextView.setTypeface(null, Typeface.BOLD); // Set text style to bold
 
-            // Add TextViews to the item layout
+            // Add delete button for each item
+            Button deleteButton = new Button(this);
+            deleteButton.setText("Delete");
+            deleteButton.setBackgroundColor(Color.RED);
+            deleteButton.setTextColor(Color.WHITE);
+            deleteButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // Remove the item from the cart
+                    cartItems.remove(item);
+                    // Update the UI
+                    displayCartItems();
+                    displayTotalPrice();
+                }
+            });
+
+            // Add TextViews and delete button to the item layout
             itemLayout.addView(itemNameTextView);
             itemLayout.addView(itemQuantityTextView);
             itemLayout.addView(itemPriceTextView);
+            itemLayout.addView(deleteButton);
 
             // Add item layout to the cart items layout
             cartItemsLayout.addView(itemLayout);
         }
     }
+
 
     private void displayTotalPrice() {
         double totalPrice = calculateTotalPrice();
