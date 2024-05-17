@@ -6,11 +6,13 @@ import androidx.core.content.ContextCompat;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupMenu;
 import android.widget.Spinner;
 
 public class GoogleActivity extends AppCompatActivity {
@@ -85,7 +87,36 @@ public class GoogleActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        // Set click listener for menu button
+        ImageView menuButton = findViewById(R.id.menu);
+        menuButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Inflate the popup menu from the layout
+                PopupMenu popupMenu = new PopupMenu(GoogleActivity.this, v);
+                popupMenu.getMenuInflater().inflate(R.menu.nav_menu, popupMenu.getMenu());
+
+                // Handle menu item clicks
+                popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+                        int id = item.getItemId();
+                        if (id == R.id.purchaseButton) {
+                            // Handle purchase history click
+                            return true;
+                        } else if (id == R.id.logoutButton) {
+                            // Handle logout click
+                            logout(); // Call logout method
+                            return true;
+                        }
+                        return false;
+                    }
+                });
+                popupMenu.show();
+            }
+        });
     }
+
 
     // Logout method
     private void logout() {
