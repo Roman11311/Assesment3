@@ -5,6 +5,7 @@ import androidx.core.content.ContextCompat;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -18,6 +19,7 @@ public class GoogleActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.google);
+        Log.d("GoogleActivity", "onCreate called");
 
         // Initialize the Spinner with quantity options
         Spinner quantitySpinner = findViewById(R.id.quantity_spinner);
@@ -42,14 +44,6 @@ public class GoogleActivity extends AppCompatActivity {
         int productId = getIntent().getIntExtra("productId", -1);
 
 
-        // Set OnClickListener for the menu button
-        ImageView menuButton = findViewById(R.id.menu);
-        menuButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                toggleMenuVisibility();
-            }
-        });
 
         // Set OnClickListener for the home button
         ImageView homeButton = findViewById(R.id.homeButton);
@@ -93,27 +87,11 @@ public class GoogleActivity extends AppCompatActivity {
         });
     }
 
+    // Logout method
     private void logout() {
-        // Clear any session data (e.g., shared preferences, database)
-        // Navigate to the login page
-        Intent intent = new Intent(this, LoginActivity.class);
-        startActivity(intent);
-        finish(); // Close the current activity to prevent going back
-    }
-
-    private void toggleMenuVisibility() {
-        LinearLayout menuLayout = findViewById(R.id.menuLayout);
-        View overlay = findViewById(R.id.overlay);
-
-        // Check if the menu is already visible
-        if (menuLayout.getVisibility() == View.VISIBLE) {
-            menuLayout.setVisibility(View.GONE);
-            overlay.setVisibility(View.GONE);
-        } else {
-            menuLayout.setVisibility(View.VISIBLE);
-            overlay.setVisibility(View.VISIBLE);
-            // Set background color to light purple when menu becomes visible
-            menuLayout.setBackgroundColor(ContextCompat.getColor(this, R.color.light_purple));
-        }
+        // Navigate to the LoginActivity without clearing session data
+        Intent loginIntent = new Intent(GoogleActivity.this, LoginActivity.class);
+        startActivity(loginIntent);
+        finish(); // Close HomeActivity after starting LoginActivity
     }
 }

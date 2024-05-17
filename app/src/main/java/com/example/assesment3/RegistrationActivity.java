@@ -1,6 +1,7 @@
 package com.example.assesment3;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Patterns;
@@ -13,6 +14,9 @@ import androidx.appcompat.app.AppCompatActivity;
 public class RegistrationActivity extends AppCompatActivity {
     EditText usernameEditText, emailEditText, passwordEditText;
 
+    // Reference to SharedPreferences
+    SharedPreferences sharedPreferences;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -21,6 +25,9 @@ public class RegistrationActivity extends AppCompatActivity {
         usernameEditText = findViewById(R.id.username);
         emailEditText = findViewById(R.id.email);
         passwordEditText = findViewById(R.id.password);
+
+        // Initialize SharedPreferences
+        sharedPreferences = getSharedPreferences("LoginPrefs", MODE_PRIVATE);
 
         Button registerButton = findViewById(R.id.register);
         registerButton.setOnClickListener(new View.OnClickListener() {
@@ -32,11 +39,11 @@ public class RegistrationActivity extends AppCompatActivity {
 
                 // Validate input fields
                 if (isValidInput(username, email, password)) {
-                    // Pass user data to the login activity
+                    // Save user credentials
+                    saveUserCredentials(username, email, password);
+
+                    // Redirect to the LoginActivity for login
                     Intent loginIntent = new Intent(RegistrationActivity.this, LoginActivity.class);
-                    loginIntent.putExtra("username", username);
-                    loginIntent.putExtra("email", email);
-                    loginIntent.putExtra("password", password);
                     startActivity(loginIntent);
                     finish(); // Finish the current activity to prevent going back to it
                 } else {
@@ -59,5 +66,17 @@ public class RegistrationActivity extends AppCompatActivity {
         }
         // Add more validation rules as needed
         return true;
+    }
+
+    // Method to save user credentials securely
+    private void saveUserCredentials(String username, String email, String password) {
+        // Get SharedPreferences editor
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        // Store username, email, and password
+        editor.putString("username", username);
+        editor.putString("email", email);
+        editor.putString("password", password);
+        // Apply changes
+        editor.apply();
     }
 }

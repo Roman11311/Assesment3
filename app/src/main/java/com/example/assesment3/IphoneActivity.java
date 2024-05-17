@@ -38,15 +38,6 @@ public class IphoneActivity extends AppCompatActivity {
             }
         });
 
-        // Set OnClickListener for the menu button
-        ImageView menuButton = findViewById(R.id.menu);
-        menuButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                toggleMenuVisibility();
-            }
-        });
-
         // Set OnClickListener for the home button
         ImageView homeButton = findViewById(R.id.homeButton);
         homeButton.setOnClickListener(new View.OnClickListener() {
@@ -97,19 +88,5 @@ public class IphoneActivity extends AppCompatActivity {
         finish(); // Close the current activity to prevent going back
     }
 
-    private void toggleMenuVisibility() {
-        LinearLayout menuLayout = findViewById(R.id.menuLayout);
-        View overlay = findViewById(R.id.overlay);
 
-        // Check if the menu is already visible
-        if (menuLayout.getVisibility() == View.VISIBLE) {
-            menuLayout.setVisibility(View.GONE);
-            overlay.setVisibility(View.GONE);
-        } else {
-            menuLayout.setVisibility(View.VISIBLE);
-            overlay.setVisibility(View.VISIBLE);
-            // Set background color to light purple when menu becomes visible
-            menuLayout.setBackgroundColor(ContextCompat.getColor(this, R.color.light_purple));
-        }
-    }
 }

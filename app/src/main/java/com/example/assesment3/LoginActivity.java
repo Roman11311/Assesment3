@@ -1,6 +1,7 @@
 package com.example.assesment3;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -13,6 +14,9 @@ import androidx.appcompat.app.AppCompatActivity;
 public class LoginActivity extends AppCompatActivity {
     EditText usernameOrEmailEditText, passwordEditText;
 
+    // Reference to SharedPreferences
+    SharedPreferences sharedPreferences;
+
     // Registered credentials from RegistrationActivity
     String registeredUsername, registeredEmail, registeredPassword;
 
@@ -23,6 +27,9 @@ public class LoginActivity extends AppCompatActivity {
 
         usernameOrEmailEditText = findViewById(R.id.usernameOrEmail);
         passwordEditText = findViewById(R.id.password);
+
+        // Initialize SharedPreferences
+        sharedPreferences = getSharedPreferences("LoginPrefs", MODE_PRIVATE);
 
         // Get the values passed from RegistrationActivity
         Bundle extras = getIntent().getExtras();
@@ -40,21 +47,23 @@ public class LoginActivity extends AppCompatActivity {
                 String enteredUsernameOrEmail = usernameOrEmailEditText.getText().toString();
                 String enteredPassword = passwordEditText.getText().toString();
 
+                // Retrieve registered username/email and password from SharedPreferences
+                String registeredUsername = sharedPreferences.getString("username", "");
+                String registeredPassword = sharedPreferences.getString("password", "");
+
                 // Check if entered credentials match the registered credentials
                 if ((registeredUsername != null && registeredUsername.equals(enteredUsernameOrEmail)) ||
                         (registeredEmail != null && registeredEmail.equals(enteredUsernameOrEmail))) {
                     if (registeredPassword != null && registeredPassword.equals(enteredPassword)) {
                         // If credentials match, navigate to the home page
-                        Intent homeIntent = new Intent(LoginActivity.this, HomeActivity.class);
-                        startActivity(homeIntent);
-                        finish(); // Finish the current activity to prevent going back to it
+                        loginSuccess(registeredUsername, registeredEmail);
                     } else {
                         // Show error message for incorrect password
-                        Toast.makeText(LoginActivity.this, "Incorrect password", Toast.LENGTH_SHORT).show();
+                        displayErrorMessage("Incorrect password");
                     }
                 } else {
                     // Show error message for incorrect username/email
-                    Toast.makeText(LoginActivity.this, "Incorrect username or email", Toast.LENGTH_SHORT).show();
+                    displayErrorMessage("Incorrect username or email");
                 }
             }
         });
@@ -69,11 +78,19 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
     }
-    private void loginSuccess() {
+
+    private void loginSuccess(String username, String email) {
         // Store user session data (e.g., username, email)
         // Redirect user to HomeActivity
         Intent intent = new Intent(this, HomeActivity.class);
+        intent.putExtra("username", username);
+        intent.putExtra("email", email);
         startActivity(intent);
         finish(); // Close the login activity to prevent going back
+    }
+
+    // Method to display error message
+    private void displayErrorMessage(String message) {
+        Toast.makeText(LoginActivity.this, message, Toast.LENGTH_SHORT).show();
     }
 }

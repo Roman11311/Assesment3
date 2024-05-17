@@ -68,7 +68,12 @@
                 android:background="@android:drawable/editbox_background"
                 android:hint="Search"
                 android:padding="8dp" />
-
+            <ImageButton
+                android:id="@+id/searchBar"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:src="@android:drawable/ic_menu_search"
+                android:contentDescription="Search" />
         </LinearLayout>
 
         <!-- Product Container -->
@@ -357,16 +362,5 @@
     </LinearLayout>
 
 
-
-    <!-- Overlay -->
-    <View
-        android:id="@+id/overlay"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#80000000"
-        android:visibility="gone" />
-
-    <!-- Include the menu layout -->
-    <include layout="@layout/menu_layout" />
 
 </RelativeLayout>

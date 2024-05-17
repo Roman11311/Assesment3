@@ -1,125 +1,224 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="16dp"
-    tools:context=".MainActivity">
+    android:layout_height="match_parent">
 
 
-    <TextView
-        android:id="@+id/search_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Search"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="16dp"/>
-
-
-    <SearchView
-        android:id="@+id/search_view"
+    <!-- Main content -->
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:queryHint="Search..."
-        android:iconifiedByDefault="false"
-        android:layout_marginTop="16dp" />
+        android:layout_height="match_parent"
+        android:fillViewport="true">
 
-    <TextView
-        android:id="@+id/recent_searches_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Recent Searches"
-        android:textSize="20sp"
-        android:layout_marginTop="16dp"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!-- Header -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="16dp">
+
+                <!-- Logo -->
+                <ImageView
+                    android:id="@+id/logo"
+                    android:layout_width="58dp"
+                    android:layout_height="58dp"
+                    android:src="@drawable/img_6" />
+
+                <!--Logo Name -->
+
+                <TextView
+                    android:id="@+id/name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="12dp"
+                    android:text="TRMS Mobile House"
+                    android:textColor="@android:color/black"
+                    android:textSize="24sp" />
+
+                <ImageView
+                    android:id="@+id/menu"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginTop="12dp"
+                    android:src="@drawable/ic_menu" />
 
 
+            </LinearLayout>
+
+            <!-- Search Box -->
+            <LinearLayout
+                android:id="@+id/searchBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/light_purple"
+                android:orientation="horizontal"
+                android:padding="16dp">
+
+                <EditText
+                    android:id="@+id/searchText"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@android:drawable/editbox_background"
+                    android:hint="Search"
+                    android:padding="8dp" />
+
+                <ImageButton
+                    android:id="@+id/searchBar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:src="@android:drawable/ic_menu_search"
+                    android:contentDescription="Search" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/recent_searches_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Recent Searches"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:layout_marginTop="16dp"/>
+
+
+            <LinearLayout
+                android:id="@+id/recent_searches_container"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:orientation="horizontal"
+                android:layout_marginTop="8dp">
+
+                <ImageView
+                    android:id="@+id/image_placeholder_1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:src="@drawable/img"
+                    android:scaleType="fitCenter"
+                    android:layout_marginEnd="8dp"/>
+
+                <ImageView
+                    android:id="@+id/image_placeholder_2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:src="@drawable/img_1"
+                    android:scaleType="fitCenter"
+                    android:layout_marginEnd="8dp"/>
+
+                <ImageView
+                    android:id="@+id/image_placeholder_3"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:src="@drawable/img_2"
+                    android:scaleType="centerInside"
+                    android:layout_marginEnd="8dp"/>
+
+            </LinearLayout>
+
+
+            <TextView
+                android:id="@+id/popular_brands_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Popular Brands"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:layout_marginTop="16dp"/>
+
+
+            <LinearLayout
+                android:id="@+id/popular_brands"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:orientation="horizontal"
+                android:layout_marginTop="8dp">
+
+                <!-- Placeholder Image 1 -->
+                <ImageView
+                    android:id="@+id/icon_image_1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:src="@drawable/apple"
+                    android:scaleType="fitCenter"
+                    android:layout_marginEnd="8dp"/>
+
+                <ImageView
+                    android:id="@+id/icon_image_2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:src="@drawable/samsung"
+                    android:scaleType="fitCenter"
+                    android:layout_marginEnd="8dp"/>
+
+                <ImageView
+                    android:id="@+id/icon_image_3"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:src="@drawable/xiaomi"
+                    android:scaleType="fitCenter"
+                    android:layout_marginEnd="8dp"/>
+
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+    <!-- Navigation Bar -->
     <LinearLayout
-        android:id="@+id/recent_searches_container"
         android:layout_width="match_parent"
-        android:layout_height="150dp"
+        android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginTop="8dp">
+        android:layout_gravity="bottom"
+        android:background="@color/light_purple"
+        android:layout_alignParentBottom="true"
+        android:padding="1dp">
 
+        <ImageButton
+            android:id="@+id/homeButton"
+            android:layout_width="0dp"
+            android:layout_height="80dp"
+            android:layout_weight="1"
+            android:background="@null"
+            android:src="@drawable/ic_home" />
 
-<!--        <ImageView-->
-<!--            android:id="@+id/image_placeholder_1"-->
-<!--            android:layout_width="0dp"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_weight="1"-->
-<!--            android:src="@drawable/iphone_15"-->
-<!--            android:scaleType="fitCenter"-->
-<!--            android:layout_marginEnd="8dp"/>-->
+        <ImageButton
+            android:id="@+id/cartButton"
+            android:layout_width="0dp"
+            android:layout_height="80dp"
+            android:layout_weight="1"
+            android:src="@drawable/ic_cart"
+            android:background="@null" />
 
+        <ImageButton
+            android:id="@+id/searchButton"
+            android:layout_width="0dp"
+            android:layout_height="80dp"
+            android:layout_weight="1"
+            android:src="@drawable/ic_search"
+            android:background="@null" />
 
-<!--        <ImageView-->
-<!--            android:id="@+id/image_placeholder_2"-->
-<!--            android:layout_width="0dp"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_marginEnd="8dp"-->
-<!--            android:layout_weight="1"-->
-<!--            android:scaleType="fitCenter"-->
-<!--            android:src="@drawable/samsung_s24" />-->
+        <ImageButton
+            android:id="@+id/accountButton"
+            android:layout_width="0dp"
+            android:layout_height="80dp"
+            android:layout_weight="1"
+            android:background="@null"
+            android:src="@drawable/ic_account" />
 
-<!--        <ImageView-->
-<!--            android:id="@+id/image_placeholder_3"-->
-<!--            android:layout_width="0dp"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_weight="1"-->
-<!--            android:src="@drawable/xiaomi"-->
-<!--            android:scaleType="centerInside"-->
-<!--            android:layout_marginEnd="8dp"/>-->
 
     </LinearLayout>
 
-
-    <TextView
-        android:id="@+id/popular_brands_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Popular Brands"
-        android:textSize="20sp"
-        android:layout_marginTop="16dp"/>
-
-
-    <LinearLayout
-        android:id="@+id/popular_brands"
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:orientation="horizontal"
-        android:layout_marginTop="8dp">
-
-        <!-- Placeholder Image 1 -->
-<!--        <ImageView-->
-<!--            android:id="@+id/icon_image_1"-->
-<!--            android:layout_width="0dp"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_weight="1"-->
-<!--            android:src="@drawable/apple"-->
-<!--            android:scaleType="fitCenter"-->
-<!--            android:layout_marginEnd="8dp"/>-->
-
-<!--        &lt;!&ndash; Placeholder Image 2 &ndash;&gt;-->
-<!--        <ImageView-->
-<!--            android:id="@+id/icon_image_2"-->
-<!--            android:layout_width="0dp"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_weight="1"-->
-<!--            android:src="@drawable/samsung"-->
-<!--            android:scaleType="fitCenter"-->
-<!--            android:layout_marginEnd="8dp"/>-->
-
-<!--        &lt;!&ndash; Placeholder Image 3 &ndash;&gt;-->
-<!--        <ImageView-->
-<!--            android:id="@+id/icon_image_3"-->
-<!--            android:layout_width="0dp"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_weight="1"-->
-<!--            android:src="@drawable/xiaomi_icon"-->
-<!--            android:scaleType="fitCenter"/>-->
-
-    </LinearLayout>
-
-</LinearLayout>
+</RelativeLayout>
