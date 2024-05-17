@@ -102,6 +102,8 @@ public class SamsungActivity extends AppCompatActivity {
         });
     }
 
+
+
     // Logout method
     private void logout() {
         // Navigate to the LoginActivity without clearing session data
