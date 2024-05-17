@@ -159,6 +159,12 @@ public class HomeActivity extends AppCompatActivity {
             case "huawei":
                 navigateToDetails("Huawei", "Huawei Product Details", HuaweiActivity.class);
                 break;
+            case "iphone":
+                navigateToDetails("Iphone", "Iphone Product Details", IphoneActivity.class);
+                break;
+            case "google":
+                navigateToDetails("Google", "Google Product Details", GoogleActivity.class);
+                break;
             default:
                 // If the search query does not match any known brand, show a toast message
                 Toast.makeText(this, "No results found", Toast.LENGTH_SHORT).show();

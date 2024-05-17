@@ -2,10 +2,13 @@ package com.example.assesment3;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupMenu;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
@@ -16,6 +19,7 @@ public class HuaweiActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.huawei);
+        Log.d("HuaweiActivity", "onCreate called");
 
         ImageView backButton = findViewById(R.id.backButton);
         backButton.setOnClickListener(new View.OnClickListener() {
@@ -69,15 +73,42 @@ public class HuaweiActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-    }
 
+    // Set click listener for menu button
+    ImageView menuButton = findViewById(R.id.menu);
+        menuButton.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            // Inflate the popup menu from the layout
+            PopupMenu popupMenu = new PopupMenu(HuaweiActivity.this, v);
+            popupMenu.getMenuInflater().inflate(R.menu.nav_menu, popupMenu.getMenu());
+
+            // Handle menu item clicks
+            popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                @Override
+                public boolean onMenuItemClick(MenuItem item) {
+                    int id = item.getItemId();
+                    if (id == R.id.purchaseButton) {
+                        // Handle purchase history click
+                        return true;
+                    } else if (id == R.id.logoutButton) {
+                        // Handle logout click
+                        logout(); // Call logout method
+                        return true;
+                    }
+                    return false;
+                }
+            });
+            popupMenu.show();
+        }
+    });
+}
+
+    // Logout method
     private void logout() {
-        // Clear any session data (e.g., shared preferences, database)
-        // Navigate to the login page
-        Intent intent = new Intent(this, LoginActivity.class);
-        startActivity(intent);
-        finish(); // Close the current activity to prevent going back
+        // Navigate to the LoginActivity without clearing session data
+        Intent loginIntent = new Intent(HuaweiActivity.this, LoginActivity.class);
+        startActivity(loginIntent);
+        finish(); // Close HomeActivity after starting LoginActivity
     }
-
-
 }
