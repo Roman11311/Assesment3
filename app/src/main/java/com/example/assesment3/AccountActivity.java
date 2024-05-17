@@ -1,43 +1,56 @@
 package com.example.assesment3;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.util.Log;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class AccountActivity extends AppCompatActivity {
     // Declare TextViews to display username and email
-    TextView usernameTextView, emailTextView;
-
+   private TextView usernameTextView, emailTextView;
+    private SharedPreferences sharedPref;
+    private static final String TAG = "AccountActivity";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_account);
 
-        // Receive username and email extras from LoginActivity
-        Intent intent = getIntent();
-        String username = intent.getStringExtra("username");
-        String email = intent.getStringExtra("email");
+        // Initialize SharedPreferences
+        sharedPref = getSharedPreferences("user_info", MODE_PRIVATE);
+
+        // Find the TextViews for username and email
+        usernameTextView = findViewById(R.id.profile_name);
+        emailTextView = findViewById(R.id.profile_email);
+
+        // Retrieve username and email from Shared Preferences (if saved)
+        String username = sharedPref.getString("username", null);
+        String email = sharedPref.getString("email", null);
+
+        // Log the retrieved values for debugging purposes
+        Log.d(TAG, "Username: " + username);
+        Log.d(TAG, "Email: " + email);
+
+        // Set username and email to TextViews (if retrieved)
+        if (username != null && email != null) {
+            usernameTextView.setText(username);
+            emailTextView.setText(email);
+        } else {
+            Log.d(TAG, "Username or Email not found in SharedPreferences");
+        }
 
         // Find the ImageButton views
         ImageButton homeButton = findViewById(R.id.homeButton);
         ImageButton cartButton = findViewById(R.id.cartButton);
         ImageButton searchButton = findViewById(R.id.searchButton);
-        ImageButton accountButton = findViewById(R.id.accountButton);
 
         // Find the LinearLayout views for buttons
         LinearLayout purchaseButtonLayout = findViewById(R.id.purchaseButtonLayout);
         LinearLayout logoutButtonLayout = findViewById(R.id.logoutButtonLayout);
-
-
-        // Set username and email to TextViews
-        TextView usernameTextView = findViewById(R.id.profile_name);
-        TextView emailTextView = findViewById(R.id.profile_email);
-        usernameTextView.setText(username);
-        emailTextView.setText(email);
 
         // Set OnClickListener for the purchaseButtonLayout
         purchaseButtonLayout.setOnClickListener(new View.OnClickListener() {

@@ -19,6 +19,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
+        android:text="Profile name"
         android:textSize="24sp"
         android:textStyle="bold"
         android:layout_toEndOf="@id/profile_picture" />
@@ -29,6 +30,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
+        android:text="Profile email"
         android:layout_below="@id/profile_name"
         android:layout_toEndOf="@id/profile_picture" />
 

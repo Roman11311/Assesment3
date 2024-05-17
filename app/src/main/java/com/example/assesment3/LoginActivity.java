@@ -17,8 +17,6 @@ public class LoginActivity extends AppCompatActivity {
     // Reference to SharedPreferences
     SharedPreferences sharedPreferences;
 
-    // Registered credentials from RegistrationActivity
-    String registeredUsername, registeredEmail, registeredPassword;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,15 +27,7 @@ public class LoginActivity extends AppCompatActivity {
         passwordEditText = findViewById(R.id.password);
 
         // Initialize SharedPreferences
-        sharedPreferences = getSharedPreferences("LoginPrefs", MODE_PRIVATE);
-
-        // Get the values passed from RegistrationActivity
-        Bundle extras = getIntent().getExtras();
-        if (extras != null) {
-            registeredUsername = extras.getString("username");
-            registeredEmail = extras.getString("email");
-            registeredPassword = extras.getString("password");
-        }
+        sharedPreferences = getSharedPreferences("user_info", MODE_PRIVATE);
 
         Button loginButton = findViewById(R.id.loginButton);
         loginButton.setOnClickListener(new View.OnClickListener() {
@@ -49,21 +39,25 @@ public class LoginActivity extends AppCompatActivity {
 
                 // Retrieve registered username/email and password from SharedPreferences
                 String registeredUsername = sharedPreferences.getString("username", "");
+                String registeredEmail = sharedPreferences.getString("email", "");
                 String registeredPassword = sharedPreferences.getString("password", "");
 
+                // Debugging messages
+                System.out.println("Entered Username/Email: " + enteredUsernameOrEmail);
+                System.out.println("Entered Password: " + enteredPassword);
+                System.out.println("Registered Username: " + registeredUsername);
+                System.out.println("Registered Email: " + registeredEmail);
+                System.out.println("Registered Password: " + registeredPassword);
+
                 // Check if entered credentials match the registered credentials
-                if ((registeredUsername != null && registeredUsername.equals(enteredUsernameOrEmail)) ||
-                        (registeredEmail != null && registeredEmail.equals(enteredUsernameOrEmail))) {
-                    if (registeredPassword != null && registeredPassword.equals(enteredPassword)) {
-                        // If credentials match, navigate to the home page
-                        loginSuccess(registeredUsername, registeredEmail);
+                if ((registeredUsername.equals(enteredUsernameOrEmail) || registeredEmail.equals(enteredUsernameOrEmail))
+                        && registeredPassword.equals(enteredPassword)) {
+                    // If credentials match, login success
+                    loginSuccess(registeredUsername, registeredEmail);
                     } else {
-                        // Show error message for incorrect password
-                        displayErrorMessage("Incorrect password");
-                    }
-                } else {
                     // Show error message for incorrect username/email
-                    displayErrorMessage("Incorrect username or email");
+                    displayErrorMessage("Incorrect username/email or password");
+
                 }
             }
         });
@@ -81,6 +75,11 @@ public class LoginActivity extends AppCompatActivity {
 
     private void loginSuccess(String username, String email) {
         // Store user session data (e.g., username, email)
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("username", username);
+        editor.putString("email", email);
+        editor.apply();
+
         // Redirect user to HomeActivity
         Intent intent = new Intent(this, HomeActivity.class);
         intent.putExtra("username", username);
