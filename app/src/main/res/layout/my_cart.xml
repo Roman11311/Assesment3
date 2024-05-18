@@ -30,7 +30,6 @@
             android:textColor="@android:color/black"
             android:textSize="24sp"
             android:textStyle="bold" />
-
     </RelativeLayout>
 
     <!-- Cart Items Layout -->
@@ -59,9 +58,7 @@
                 android:textColor="@android:color/black"
                 android:textSize="18sp"
                 android:visibility="gone" />
-
         </LinearLayout>
-
     </ScrollView>
 
     <!-- Total Price Layout -->
@@ -91,8 +88,6 @@
             android:layout_alignParentEnd="true"
             android:layout_marginStart="16dp"
             android:text="Proceed to Checkout"
-            android:textColor="@android:color/white" />
-
+            android:textColor="@android:color/white"/>
     </RelativeLayout>
-
 </RelativeLayout>

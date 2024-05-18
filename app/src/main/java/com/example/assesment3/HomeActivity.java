@@ -14,7 +14,6 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-
 public class HomeActivity extends AppCompatActivity {
 
     @Override
@@ -36,7 +35,8 @@ public class HomeActivity extends AppCompatActivity {
         ImageButton accountButton = findViewById(R.id.accountButton);
         ImageButton searchBar = findViewById(R.id.searchBar);
         EditText searchText = findViewById(R.id.searchText);
-// Set OnClickListener for the cartButton
+
+        // Set OnClickListener for the cartButton
         cartButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -46,7 +46,7 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
-// Set OnClickListener for the searchButton
+        // Set OnClickListener for the searchButton
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -69,7 +69,7 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
-// Set OnClickListener for the accountButton
+        // Set OnClickListener for the accountButton
         accountButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -135,7 +135,9 @@ public class HomeActivity extends AppCompatActivity {
                     public boolean onMenuItemClick(MenuItem item) {
                         int id = item.getItemId();
                         if (id == R.id.purchaseButton) {
-                            // Handle purchase history click
+                            // Navigate to OrderHistoryActivity
+                            Intent intent = new Intent(HomeActivity.this, OrderHistoryActivity.class);
+                            startActivity(intent);
                             return true;
                         } else if (id == R.id.logoutButton) {
                             // Handle logout click
@@ -157,13 +159,13 @@ public class HomeActivity extends AppCompatActivity {
                 navigateToDetails("Samsung", "Samsung Galaxy S24 Ultra 5G", SamsungActivity.class);
                 break;
             case "huawei":
-                navigateToDetails("Huawei", "Huawei Product Details", HuaweiActivity.class);
+                navigateToDetails("Huawei", "Huawei Pura 70 Pro 5G", HuaweiActivity.class);
                 break;
             case "iphone":
-                navigateToDetails("Iphone", "Iphone Product Details", IphoneActivity.class);
+                navigateToDetails("Iphone", "Iphone 15 Pro Max 5G", IphoneActivity.class);
                 break;
             case "google":
-                navigateToDetails("Google", "Google Product Details", GoogleActivity.class);
+                navigateToDetails("Google", "Google Pixel Pro 5G", GoogleActivity.class);
                 break;
             default:
                 // If the search query does not match any known brand, show a toast message
@@ -172,13 +174,13 @@ public class HomeActivity extends AppCompatActivity {
         }
     }
 
-
-    private void navigateToDetails(String brand, String productName,  Class<?> destinationActivity) {
-        Intent intent = new Intent(HomeActivity.this, destinationActivity); // Change to the appropriate activity
+    private void navigateToDetails(String brand, String productName, Class<?> destinationActivity) {
+        Intent intent = new Intent(HomeActivity.this, destinationActivity);
         intent.putExtra("brand", brand);
         intent.putExtra("productName", productName);
         startActivity(intent);
     }
+
     // Logout method
     private void logout() {
         // Navigate to the LoginActivity without clearing session data

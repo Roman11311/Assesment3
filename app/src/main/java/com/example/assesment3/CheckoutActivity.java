@@ -1,20 +1,27 @@
 package com.example.assesment3;
 
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.text.TextUtils;
+import android.util.Patterns;
 import android.view.View;
-import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-
-import com.example.assesment3.MyCartActivity.CartItem;
 
 import java.util.ArrayList;
 
 public class CheckoutActivity extends AppCompatActivity {
+
+    private ArrayList<MyCartActivity.CartItem> items;
+    private double totalPrice;
+    private EditText nameEditText;
+    private EditText emailEditText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,27 +32,53 @@ public class CheckoutActivity extends AppCompatActivity {
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish(); // Go back to the previous activity
+                finish();
             }
         });
 
-        // Retrieve list of items and total price from intent
-        ArrayList<CartItem> items = (ArrayList<CartItem>) getIntent().getSerializableExtra("cartItems");
-        double totalPrice = getIntent().getDoubleExtra("totalPrice", 0.0);
+        items = (ArrayList<MyCartActivity.CartItem>) getIntent().getSerializableExtra("cartItems");
+        totalPrice = getIntent().getDoubleExtra("totalPrice", 0.0);
 
-        // Display items and total price
+        nameEditText = findViewById(R.id.nameEditText);
+        emailEditText = findViewById(R.id.emailEditText);
+
         if (items != null) {
             displayOrderSummary(items, totalPrice);
         }
     }
 
-    private void displayOrderSummary(ArrayList<CartItem> items, double totalPrice) {
-        // Find the layout where items will be displayed
+    public void onPlaceOrderButtonClick(View view) {
+        String name = nameEditText.getText().toString().trim();
+        String email = emailEditText.getText().toString().trim();
+
+        if (TextUtils.isEmpty(name) || !isValidEmail(email)) {
+            Toast.makeText(this, "Please enter a valid name and email", Toast.LENGTH_SHORT).show();
+        } else if (totalPrice == 0) {
+            Toast.makeText(this, "Please select at least 1 item in the cart", Toast.LENGTH_SHORT).show();
+        } else {
+            MyCartActivity.Order newOrder = new MyCartActivity.Order(items, totalPrice);
+            MyCartActivity.getOrderHistory().add(newOrder);
+
+            // Clear the cart
+            MyCartActivity.clearCart();
+
+            Toast.makeText(this, "Order successfully", Toast.LENGTH_SHORT).show();
+
+            Intent intent = new Intent(CheckoutActivity.this, HomeActivity.class);
+            startActivity(intent);
+            finish();
+        }
+    }
+
+    private boolean isValidEmail(CharSequence email) {
+        return !TextUtils.isEmpty(email) && Patterns.EMAIL_ADDRESS.matcher(email).matches();
+    }
+
+    private void displayOrderSummary(ArrayList<MyCartActivity.CartItem> items, double totalPrice) {
         LinearLayout orderSummaryLayout = findViewById(R.id.orderSummaryLayout);
 
-        // Display each item
         for (int i = 0; i < items.size(); i++) {
-            CartItem item = items.get(i);
+            MyCartActivity.CartItem item = items.get(i);
             LinearLayout itemLayout = new LinearLayout(this);
             itemLayout.setLayoutParams(new LinearLayout.LayoutParams(
                     LinearLayout.LayoutParams.MATCH_PARENT,
@@ -69,20 +102,16 @@ public class CheckoutActivity extends AppCompatActivity {
 
             itemNameTextView.setTypeface(null, Typeface.BOLD);
 
-            // Add top margin to all items except the first one
             if (i >= 0) {
                 LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) itemLayout.getLayoutParams();
-                layoutParams.topMargin = 16; // Adjust the margin as needed
+                layoutParams.topMargin = 16;
                 itemLayout.setLayoutParams(layoutParams);
             }
 
             orderSummaryLayout.addView(itemLayout);
         }
 
-    // Display total price
         TextView totalPriceTextView = findViewById(R.id.totalPriceTextView);
         totalPriceTextView.setText(String.format("Total Price: $%.2f", totalPrice));
     }
-
-
 }

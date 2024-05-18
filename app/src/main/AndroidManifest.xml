@@ -36,7 +36,6 @@
         <activity
             android:name=".HomeActivity"
             android:exported="true">
-
         </activity>
 
         <!-- Samsung Activity -->
@@ -68,6 +67,7 @@
                 android:value=".HomeActivity" />
         </activity>
 
+        <!-- Google Activity -->
         <activity
             android:name=".GoogleActivity"
             android:label="Product Details"
@@ -77,33 +77,20 @@
                 android:value=".HomeActivity" />
         </activity>
 
-
-        <!-- Search Activity -->
-        <activity
-            android:name=".SearchActivity"
-            android:exported="true">
-        </activity>
-
-        <!-- Account Activity -->
-        <activity
-            android:name=".AccountActivity"
-            android:exported="true">
-        </activity>
-
         <!-- My Cart Activity -->
-        <activity
-            android:name=".MyCartActivity"
-            android:label="My Cart"
-            android:exported="true">
-        </activity>
+        <activity android:name=".MyCartActivity" />
+
+        <!-- Order History Activity -->
+        <activity android:name=".OrderHistoryActivity" />
+
+        <!-- Order Details Activity -->
+        <activity android:name=".OrderDetailsActivity" />
 
         <!-- Checkout Activity -->
-        <activity
-            android:name=".CheckoutActivity"
-            android:label="Checkout"
-            android:exported="true">
-        </activity>
+        <activity android:name=".CheckoutActivity" />
 
+        <!-- Account Activity -->
+        <activity android:name=".AccountActivity" />
     </application>
 
 </manifest>

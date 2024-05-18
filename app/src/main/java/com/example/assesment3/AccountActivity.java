@@ -57,7 +57,7 @@ public class AccountActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // Go to purchase history page
-                Intent intent = new Intent(AccountActivity.this, PurchaseHistoryActivity.class);
+                Intent intent = new Intent(AccountActivity.this, OrderHistoryActivity.class);
                 startActivity(intent);
             }
         });

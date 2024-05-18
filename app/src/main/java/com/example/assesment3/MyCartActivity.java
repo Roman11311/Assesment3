@@ -9,13 +9,16 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
 import androidx.appcompat.app.AppCompatActivity;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 
 public class MyCartActivity extends AppCompatActivity {
 
     private static ArrayList<CartItem> cartItems = new ArrayList<>();
+    private static ArrayList<Order> orderHistory = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,7 +29,7 @@ public class MyCartActivity extends AppCompatActivity {
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish(); // Go back to the previous activity
+                finish();
             }
         });
 
@@ -34,30 +37,23 @@ public class MyCartActivity extends AppCompatActivity {
         proceedToCheckoutButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Move to CheckoutActivity
                 Intent intent = new Intent(MyCartActivity.this, CheckoutActivity.class);
-                intent.putExtra("cartItems", cartItems); // Pass the ArrayList<CartItem> directly
+                intent.putExtra("cartItems", cartItems);
                 intent.putExtra("totalPrice", calculateTotalPrice());
                 startActivity(intent);
             }
         });
 
-
-        // Retrieve product details from the intent
         Intent intent = getIntent();
 
-        // Check if the intent has the necessary extras
         if (intent != null) {
-            // Check if the intent has extra for Samsung product
-            if (intent.hasExtra("samsungProductName")
-                && intent.hasExtra("samsungProductPrice")) {
+            if (intent.hasExtra("samsungProductName") && intent.hasExtra("samsungProductPrice")) {
                 String samsungProductName = intent.getStringExtra("samsungProductName");
                 double samsungProductPrice = intent.getDoubleExtra("samsungProductPrice", 0.0);
                 int samsungProductQuantity = intent.getIntExtra("samsungProductQuantity", 1);
                 handleProduct(samsungProductName, samsungProductPrice, samsungProductQuantity);
             }
 
-            // Check if the intent has extra for Huawei product
             if (intent.hasExtra("huaweiProductName") && intent.hasExtra("huaweiProductPrice")) {
                 String huaweiProductName = intent.getStringExtra("huaweiProductName");
                 double huaweiProductPrice = intent.getDoubleExtra("huaweiProductPrice", 0.0);
@@ -78,42 +74,44 @@ public class MyCartActivity extends AppCompatActivity {
                 int googleProductQuantity = intent.getIntExtra("googleProductQuantity", 1);
                 handleProduct(googleProductName, googleProductPrice, googleProductQuantity);
             }
-        }
-
-        else {
-            // Show "No items in the cart" message
+        } else {
             TextView noItemsTextView = findViewById(R.id.noItemsTextView);
             noItemsTextView.setVisibility(View.VISIBLE);
         }
 
         displayCartItems();
-        // Display total price after adding all items
         displayTotalPrice();
+    }
+
+    public static void clearCart() {
+        cartItems.clear();
+    }
+
+    public static ArrayList<Order> getOrderHistory() {
+        return orderHistory;
     }
 
     private double calculateTotalPrice() {
         double totalPrice = 0.0;
         for (CartItem item : cartItems) {
-            totalPrice += item.getPrice() * item.getQuantity(); // Multiply by quantity
+            totalPrice += item.getPrice() * item.getQuantity();
         }
         return totalPrice;
     }
 
     private void displayCartItems() {
         LinearLayout cartItemsLayout = findViewById(R.id.cartItemsLayout);
-        cartItemsLayout.removeAllViews(); // Clear previous items
+        cartItemsLayout.removeAllViews();
 
         for (int i = 0; i < cartItems.size(); i++) {
             final CartItem item = cartItems.get(i);
 
-            // Create a new LinearLayout for each cart item
             LinearLayout itemLayout = new LinearLayout(this);
             itemLayout.setLayoutParams(new LinearLayout.LayoutParams(
                     LinearLayout.LayoutParams.MATCH_PARENT,
                     LinearLayout.LayoutParams.WRAP_CONTENT));
             itemLayout.setOrientation(LinearLayout.HORIZONTAL);
 
-            // Add TextViews for item name, quantity, and price to the layout
             TextView itemNameTextView = new TextView(this);
             itemNameTextView.setText(item.getName());
             itemNameTextView.setTextSize(16);
@@ -129,19 +127,18 @@ public class MyCartActivity extends AppCompatActivity {
                     LinearLayout.LayoutParams.WRAP_CONTENT));
 
             TextView itemPriceTextView = new TextView(this);
-            itemPriceTextView.setText(String.format("$%.2f", item.getPrice() * item.getQuantity())+ " "); // Multiply by quantity
+            itemPriceTextView.setText(String.format("$%.2f", item.getPrice() * item.getQuantity()) + " ");
             itemPriceTextView.setTextSize(16);
             itemPriceTextView.setLayoutParams(new LinearLayout.LayoutParams(
                     LinearLayout.LayoutParams.WRAP_CONTENT,
                     LinearLayout.LayoutParams.WRAP_CONTENT));
 
             LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) itemLayout.getLayoutParams();
-            layoutParams.topMargin = 16; // Adjust the margin as needed
+            layoutParams.topMargin = 16;
             itemLayout.setLayoutParams(layoutParams);
 
-            itemPriceTextView.setTypeface(null, Typeface.BOLD); // Set text style to bold
+            itemPriceTextView.setTypeface(null, Typeface.BOLD);
 
-            // Add delete button for each item
             Button deleteButton = new Button(this);
             deleteButton.setText("Delete");
             deleteButton.setBackgroundColor(Color.RED);
@@ -149,51 +146,41 @@ public class MyCartActivity extends AppCompatActivity {
             deleteButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    // Remove the item from the cart
                     cartItems.remove(item);
-                    // Update the UI
                     displayCartItems();
                     displayTotalPrice();
                 }
             });
 
-            // Add TextViews and delete button to the item layout
             itemLayout.addView(itemNameTextView);
             itemLayout.addView(itemQuantityTextView);
             itemLayout.addView(itemPriceTextView);
             itemLayout.addView(deleteButton);
 
-            // Add item layout to the cart items layout
             cartItemsLayout.addView(itemLayout);
         }
     }
 
-
     private void displayTotalPrice() {
         double totalPrice = calculateTotalPrice();
 
-        // Display total price
         TextView totalPriceTextView = findViewById(R.id.totalPriceTextView);
         totalPriceTextView.setText(String.format("Total: $%.2f", totalPrice));
     }
 
     private void handleProduct(String productName, double productPrice, int quantity) {
-        // Check if the product is already in cartItems
         boolean productFound = false;
         for (CartItem item : cartItems) {
             if (item.getName().equals(productName)) {
-                // Increment quantity
                 item.setQuantity(item.getQuantity() + quantity);
                 productFound = true;
                 break;
             }
         }
         if (!productFound) {
-            // Add the product to the cart items list
             cartItems.add(new CartItem(productName, productPrice, quantity));
         }
     }
-
 
     public static class CartItem implements Serializable {
         private String name;
@@ -220,6 +207,24 @@ public class MyCartActivity extends AppCompatActivity {
 
         public void setQuantity(double quantity) {
             this.quantity = quantity;
+        }
+    }
+
+    public static class Order implements Serializable {
+        private ArrayList<CartItem> items;
+        private double totalPrice;
+
+        public Order(ArrayList<CartItem> items, double totalPrice) {
+            this.items = items;
+            this.totalPrice = totalPrice;
+        }
+
+        public ArrayList<CartItem> getItems() {
+            return items;
+        }
+
+        public double getTotalPrice() {
+            return totalPrice;
         }
     }
 }

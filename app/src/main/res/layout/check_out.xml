@@ -17,7 +17,7 @@
             android:layout_height="wrap_content"
             android:src="@drawable/baseline_arrow_back_24"
             android:clickable="true"
-            android:onClick="onBackButtonClick" />
+            android:onClick="finish" />
 
         <TextView
             android:id="@+id/checkoutTextView"
@@ -52,7 +52,8 @@
             android:id="@+id/nameEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Name" />
+            android:hint="Name"
+            android:inputType="textPersonName" />
 
         <EditText
             android:id="@+id/addressEditText"
@@ -64,13 +65,15 @@
             android:id="@+id/contactEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Contact Number" />
+            android:hint="Contact Number"
+            android:inputType="phone" />
 
         <EditText
             android:id="@+id/emailEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Email" />
+            android:hint="Email"
+            android:inputType="textEmailAddress" />
 
         <TextView
             android:id="@+id/paymentDetailsTitleTextView"
@@ -87,33 +90,31 @@
             android:id="@+id/cardNumberEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Card Number" />
+            android:hint="Card Number"
+            android:inputType="number" />
 
         <EditText
             android:id="@+id/nameOnCardEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Name on Card" />
+            android:hint="Name on Card"
+            android:inputType="textPersonName" />
 
         <EditText
             android:id="@+id/expirationDateEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Expiration Date (MM/YY)"
-            android:inputType="number"
-            android:maxLength="5" />
+            android:inputType="number" />
 
         <EditText
             android:id="@+id/securityCodeEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Security Code"
-            android:inputType="number"
-            android:maxLength="3" />
-
+            android:inputType="number" />
     </LinearLayout>
 
-    <!-- Order Summary -->
     <ScrollView
         android:id="@+id/orderSummaryScrollView"
         android:layout_width="match_parent"
@@ -138,7 +139,6 @@
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
-            <!-- List of items -->
             <LinearLayout
                 android:id="@+id/cartItemsLayout"
                 android:layout_width="match_parent"
@@ -154,9 +154,7 @@
                 android:text="Total Price: $0.00"
                 android:textColor="@android:color/black"
                 android:textStyle="bold" />
-
         </LinearLayout>
-
     </ScrollView>
 
     <Button
@@ -166,6 +164,6 @@
         android:layout_alignParentBottom="true"
         android:layout_margin="16dp"
         android:text="Place Order"
-        android:textColor="@android:color/white" />
-
+        android:textColor="@android:color/white"
+        android:onClick="onPlaceOrderButtonClick" />
 </RelativeLayout>
