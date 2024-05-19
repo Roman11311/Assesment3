@@ -91,6 +91,9 @@
 
         <!-- Account Activity -->
         <activity android:name=".AccountActivity" />
+
+        <!-- Search Activity -->
+        <activity android:name=".SearchActivity" />
     </application>
 
 </manifest>

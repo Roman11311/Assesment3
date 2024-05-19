@@ -29,12 +29,21 @@
             android:textColor="@android:color/black"
             android:textSize="24sp"
             android:textStyle="bold" />
+
+        <ImageView
+            android:id="@+id/menu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:src="@drawable/ic_menu"
+            android:clickable="true" />
     </RelativeLayout>
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/headerLayout">
+        android:layout_height="wrap_content"
+        android:layout_below="@id/headerLayout"
+        android:layout_above="@id/totalPriceLayout">
 
         <LinearLayout
             android:id="@+id/orderDetailsLayout"
@@ -46,14 +55,64 @@
         </LinearLayout>
     </ScrollView>
 
-    <TextView
-        android:id="@+id/totalPriceTextView"
+    <RelativeLayout
+        android:id="@+id/totalPriceLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_above="@id/navigationBar"
+        android:background="#F8CBEE"
+        android:padding="16dp">
+
+        <TextView
+            android:id="@+id/totalPriceTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Total Price: $0.00"
+            android:textColor="@android:color/black"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:padding="16dp" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/navigationBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
         android:layout_alignParentBottom="true"
-        android:text="Total Price: $0.00"
-        android:textColor="@android:color/black"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        android:padding="16dp" />
+        android:background="@color/light_purple"
+        android:padding="1dp">
+
+        <ImageButton
+            android:id="@+id/homeButton"
+            android:layout_width="0dp"
+            android:layout_height="80dp"
+            android:layout_weight="1"
+            android:background="@null"
+            android:src="@drawable/ic_home" />
+
+        <ImageButton
+            android:id="@+id/cartButton"
+            android:layout_width="0dp"
+            android:layout_height="80dp"
+            android:layout_weight="1"
+            android:src="@drawable/ic_cart"
+            android:background="@null" />
+
+        <ImageButton
+            android:id="@+id/searchButton"
+            android:layout_width="0dp"
+            android:layout_height="80dp"
+            android:layout_weight="1"
+            android:src="@drawable/ic_search"
+            android:background="@null" />
+
+        <ImageButton
+            android:id="@+id/accountButton"
+            android:layout_width="0dp"
+            android:layout_height="80dp"
+            android:layout_weight="1"
+            android:background="@null"
+            android:src="@drawable/ic_account" />
+    </LinearLayout>
 </RelativeLayout>
