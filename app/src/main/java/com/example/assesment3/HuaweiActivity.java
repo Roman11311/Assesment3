@@ -68,7 +68,7 @@ public class HuaweiActivity extends AppCompatActivity {
             public void onClick(View v) {
                 // Get the product name, price, and quantity
                 String productName = "Huawei Pura 70 Pro 5G";
-                double productPrice = 1530.00;
+                double productPrice = 1350.00;
                 int quantity = Integer.parseInt(quantitySpinner.getSelectedItem().toString());
 
                 // Create an intent to navigate to the MyCartActivity
